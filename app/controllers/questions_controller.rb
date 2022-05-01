@@ -1,11 +1,13 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show]
+
   def index
     @questions = Question.all
   end
 
   def show
+    @answer = @question.answers.new
   end
 
   def new
@@ -19,7 +21,6 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
-
   end
 
   private
