@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question) }
+  let(:user) { create(:user) }
+
+  before { login(user) }
 
   describe 'GET #new' do
     before { get :new, params: { question_id: question } }
@@ -29,6 +32,11 @@ RSpec.describe AnswersController, type: :controller do
         it 'does not save the answer' do
           expect{ new_answer }.to_not change(question.answers, :count)
         end
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      context 'The author can delete his question or answer' do
 
       end
     end

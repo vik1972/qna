@@ -22,4 +22,19 @@ feature 'User can create answer', %q{
 
     expect(page).to have_content "Body can't be blank"
   end
+  describe 'Authenticated user' do
+    background do
+      sign_in(user)
+      visit question_path(question)
+    end
+
+    scenario 'User can create answer' do
+      fill_in 'Body', with: 'Answer text'
+      click_on 'New answer'
+
+      expect(page).to have_content 'Your answer successfully created.'
+      expect(page).to have_content 'Answer text'
+    end
+  end
+
 end
