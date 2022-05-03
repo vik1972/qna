@@ -6,27 +6,13 @@ feature 'User can create answer', %q{
   I'd like to be able create answer
 }do
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
-  background { visit question_path(question) }
-
-  scenario 'User can create answer' do
-    fill_in 'Body', with: 'Answer text'
-    click_on 'New answer'
-
-    expect(page).to have_content 'Your answer successfully created.'
-    expect(page).to have_content 'Answer text'
+  given(:question) { create(:question, user: user) }
+  background do
+    sign_in(user)
+    visit question_path(question)
   end
 
-  scenario 'User can create wrong answer' do
-    click_on 'New answer'
-
-    expect(page).to have_content "Body can't be blank"
-  end
   describe 'Authenticated user' do
-    background do
-      sign_in(user)
-      visit question_path(question)
-    end
 
     scenario 'User can create answer' do
       fill_in 'Body', with: 'Answer text'
@@ -34,6 +20,12 @@ feature 'User can create answer', %q{
 
       expect(page).to have_content 'Your answer successfully created.'
       expect(page).to have_content 'Answer text'
+    end
+
+    scenario 'User can create wrong answer' do
+      click_on 'New answer'
+
+      expect(page).to have_content "Body can't be blank"
     end
   end
 

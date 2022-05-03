@@ -9,7 +9,6 @@ feature 'Guest can sign up', %q{
   background { visit new_user_registration_path }
 
   scenario 'Guest tries to sign up' do
-    # save_and_open_page
     fill_in 'Email', with: 'bvv33@yandex.ru' # user.email #
     fill_in 'Password', with: user.password
     fill_in 'Password confirmation', with: user.password_confirmation
