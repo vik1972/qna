@@ -10,7 +10,6 @@ feature 'User can view the list of questions', %q{
 
   scenario 'User tries to view list of questions' do
     visit questions_path
-
     questions.each do |question|
       expect(page).to have_content(question.title)
     end

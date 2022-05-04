@@ -23,4 +23,10 @@ feature 'User can delete his question', %q{
 
     expect(page).to_not have_link 'Delete answer'
   end
+
+  scenario "Unauthenticated user destroys other user's answer" do
+    visit question_path answer.question
+
+    expect(page).to_not have_link 'Delete answer'
+  end
 end
