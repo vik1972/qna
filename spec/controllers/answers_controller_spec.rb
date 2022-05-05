@@ -67,14 +67,14 @@ RSpec.describe AnswersController, type: :controller do
         end
       end
 
-      context 'Unauthorized user' do
+      context 'Unauthorised user' do
         it 'tries to delete answer' do
-          expect { delete :destroy, params: { id: answer} }.to_not change(Answer, :count)
+          expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
         end
 
-        it 'redirects to questions list' do
+        it 'redirects to login page' do
           delete :destroy, params: { id: answer }
-          expect(response).to redirect_to question_path(question)
+          expect(response).to redirect_to new_user_session_path
         end
       end
 

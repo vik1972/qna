@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_question, only: %i[create]
   before_action :find_answer, only: %i[destroy]
 
@@ -17,11 +18,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy if current_user.present? && current_user.author_of?(@answer)
+    @answer.destroy if current_user.author_of?(@answer)
     redirect_to question_path(@answer.question)
   end
 
   private
+
   def find_answer
     @answer = Answer.find(params[:id])
   end

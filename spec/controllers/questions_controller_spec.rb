@@ -90,7 +90,6 @@ RSpec.describe QuestionsController, type: :controller do
         before { login(not_author) }
 
         it 'tries to delete question' do
-          delete :destroy, params: { id: question }
           expect{delete :destroy, params: {id: question}}.to_not change(Question, :count)
         end
 
@@ -102,7 +101,6 @@ RSpec.describe QuestionsController, type: :controller do
 
       context 'Unauthorised user' do
         it 'tries to delete question' do
-          delete :destroy, params: { id: question }
           expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
         end
 
