@@ -4,7 +4,7 @@ feature 'User can delete his question', %q{
   In order to delete yourself answer
   As an authenticated user
   I'd like to be able to delete my answer
-}do
+}, js: true do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
   given(:answer) { create(:answer) }
@@ -12,7 +12,7 @@ feature 'User can delete his question', %q{
   scenario 'Authenticated user destroys own answer' do
     sign_in(answer.user)
     visit question_path answer.question
-    click_on 'Delete answer'
+    click_on 'Delete'
 
     expect(page).to_not have_content answer.body
   end
