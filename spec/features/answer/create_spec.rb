@@ -9,17 +9,18 @@ feature 'User can create answer', %q{
   given(:question) { create(:question, user: user) }
 
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true  do
     background do
       sign_in(user)
       visit question_path(question)
     end
     scenario 'can create answer' do
-      fill_in 'Body', with: 'Answer text'
+      fill_in 'Your answer', with: 'Answer text'
       click_on 'New answer'
 
-      expect(page).to have_content 'Your answer successfully created.'
-      expect(page).to have_content 'Answer text'
+      within '.answers' do
+        expect(page).to have_content 'Answer text'
+      end
     end
 
     scenario 'can create answer with invalid data' do
