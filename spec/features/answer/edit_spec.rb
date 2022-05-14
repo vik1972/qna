@@ -22,7 +22,6 @@ feature 'User can edit his answer', %q{
     end
     scenario 'edits his answer' do
       click_on 'Edit'
-      # save_and_open_page
       within '.answers' do
         fill_in 'Your answer', with: 'edit answer'
         click_on 'Save'
