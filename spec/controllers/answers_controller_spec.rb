@@ -5,32 +5,59 @@ RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:answer) { create(:answer, question: question, user: user) }
 
-  describe 'GET #new' do
-    before { login(user) }
-    before { get :new, params: { question_id: question } }
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
-
   describe 'POST #create' do
     before { login(user) }
     context 'with valid attributes' do
-      let(:new_answer) { post :create, params: { answer: attributes_for(:answer), question_id: question } }
+      let(:new_answer) { post :create, params: { answer: attributes_for(:answer), question_id: question }, format: :js }
       it 'saves a new answer in the database' do
-        expect{ new_answer }.to change(question.answers, :count).by(1)
+        expect { new_answer }.to change(question.answers, :count).by(1)
       end
 
-      it 'redirects to show view' do
+      it 'redirects to create template' do
         new_answer
-        expect(response).to redirect_to assigns(:question)
+        expect(response).to render_template :create
       end
 
       context 'with invalid attributes' do
-        let!(:new_answer) { post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question } }
+        let!(:new_answer) { post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }, format: :js }
         it 'does not save the answer' do
-          expect{ new_answer }.to_not change(question.answers, :count)
+          expect { new_answer }.to_not change(question.answers, :count)
+        end
+
+        it 'render question create template' do
+          post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }, format: :js
+          expect(response).to render_template :create
+        end
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:answer) { create(:answer, question: question) }
+
+    context 'Authorized user edits his answer' do
+      before { login(user) }
+
+      context 'with valid attributes' do
+        it 'changes answer attributes' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          answer.reload
+          expect(answer.body).to eq 'new body'
+        end
+
+        it 'renders update view' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+      context 'with invalid attributes' do
+        it 'does not save the answer' do
+          expect { post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }, format: :js }.to_not change(Answer, :count)
+        end
+
+        it 'renders create template' do
+          post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question, format: :js }
+          expect(response).to render_template :create
         end
       end
     end
@@ -38,45 +65,68 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
 
-      let!(:answer) { create(:answer, question: question, user: user )}
+    let!(:answer) { create(:answer, question: question, user: user) }
 
-      context 'The author can delete his question or answer' do
-        before { login(user) }
-        it 'check that answer was deleted' do
-          delete :destroy, params: {id: answer}
-          expect(assigns(:answer)).to be_destroyed
-        end
-
-        it 'redirects to questions list' do
-          delete :destroy, params: { id: answer }
-          expect(response).to redirect_to question_path(question)
-        end
+    context 'The author can delete his question or answer' do
+      before { login(user) }
+      it 'check that answer was deleted' do
+        delete :destroy, params: { id: answer }, format: :js
+        expect(assigns(:answer)).to be_destroyed
       end
 
-      context 'User is not author' do
-        let(:not_author) { create(:user) }
-        before { login(not_author) }
+      it 'render destroy template' do
+        delete :destroy, params: { id: answer }, format: :js
+        expect(response).to render_template :destroy
+      end
+    end
 
-        it 'tries to delete answer' do
-          expect { delete :destroy, params: { id: answer} }.to_not change(Answer, :count)
-        end
+    context 'User is not author' do
+      let(:not_author) { create(:user) }
+      before { login(not_author) }
 
-        it 'redirects to questions list' do
-          delete :destroy, params: { id: answer }
-          expect(response).to redirect_to question_path(question)
-        end
+      it 'tries to delete answer' do
+        expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
       end
 
-      context 'Unauthorised user' do
-        it 'tries to delete answer' do
-          expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
-        end
+      it 'render destroy template' do
+        delete :destroy, params: { id: answer }, format: :js
+        expect(response).to render_template :destroy
+      end
+    end
 
-        it 'redirects to login page' do
-          delete :destroy, params: { id: answer }
-          expect(response).to redirect_to new_user_session_path
-        end
+    context 'Unauthorised user' do
+      it 'tries to delete answer' do
+        expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
+      end
+    end
+  end
+  describe 'PATCH #mark_best' do
+    let(:author) { create(:user) }
+    let(:new_question) { create(:question, user: author) }
+    let(:answer) { create(:answer, question: new_question, user: user) }
+
+    context 'Unauthenticated user' do
+      it 'tries do mark as best answer' do
+        answer.best=false
+        patch :mark_as_best, params: { id: answer, answer: { best: true } }, format: :js
+        answer.reload
+        expect(answer.best).to eq false
+      end
+    end
+
+    context 'User is author of question' do
+      before { login(author) }
+
+      it 'set best answer' do
+        patch :mark_as_best, params: { id: answer, answer: { best: true} }, format: :js
+        answer.reload
+        expect(answer.best).to be
       end
 
+      it 'renders set_best view' do
+        patch :mark_as_best, params: { id: answer, answer: { body: 'new body'}, format: :js }
+        expect(response).to render_template :mark_as_best
+      end
+    end
   end
 end
