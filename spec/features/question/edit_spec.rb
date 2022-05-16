@@ -16,7 +16,6 @@ feature 'User can his question', %q{
     end
 
     scenario 'edits his question' do
-      # save_and_open_page
       within '.questions' do
         click_on 'Edit question'
         fill_in 'Title', with: 'edited question title'
@@ -27,6 +26,24 @@ feature 'User can his question', %q{
       expect(page).to have_content 'edited question title'
       expect(page).to_not have_selector 'textarea'
     end
+
+    scenario 'can add attached files' do
+      # save_and_open_page
+      expect(page).to_not have_link 'rails_helper.rb'
+      expect(page).to_not have_link 'spec_helper.rb'
+
+      within '.questions' do
+        click_on 'Edit question'
+        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+
+
+    end
+
 
     scenario 'edits his question with invalid' do
       within '.questions' do

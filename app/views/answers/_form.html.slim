@@ -2,6 +2,11 @@
   =render 'shared/errors_html', resource: @answer
 
 = form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
-  = f.label :body, 'Your answer'
-  = f.text_area :body
-  = f.submit 'New answer'
+  p
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+  p
+    =f.label  :files
+    =f.file_field :files, multiple: true
+  p
+    = f.submit 'New answer'
