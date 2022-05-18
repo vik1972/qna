@@ -9,7 +9,6 @@ class Answer < ApplicationRecord
 
   def mark_best!
     transaction do
-      # question.answers.lock!.update_all(best: false)
       self.class.where(question_id: self.question_id).update(best: false)
       update(best: true)
     end

@@ -22,6 +22,7 @@ class AnswersController < ApplicationController
     @answer.mark_best! if current_user.author_of?(@answer.question)
   end
 
+
   private
 
   def find_answer
@@ -35,4 +36,5 @@ class AnswersController < ApplicationController
   def answer_params
     params.require(:answer).permit(:body, files: [])
   end
+
 end

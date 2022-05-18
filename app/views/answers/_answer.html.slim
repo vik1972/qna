@@ -4,19 +4,17 @@
       b= "Best answer:"
 
     p= answer.body
-    - if answer.files.attached?
-      - answer.files.each do |file|
-        p= link_to file.filename.to_s, url_for(file)
+
+    = render 'shared/attachments', resource: answer
 
     - if show_best?(answer)
       p= link_to 'Mark as best', mark_as_best_answer_path(answer),
-              remote: true,
-              method: :patch
+            remote: true,
+            method: :patch
 
     - if current_user&.author_of?(answer)
       p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-      p= button_to 'Delete',
-              answer_path(answer),
+      p= button_to 'Delete answer', answer_path(answer),
               remote: true,
               method: :delete
 
@@ -25,8 +23,8 @@
         = f.label :body, 'Your answer'
         = f.text_area :body
       p
-        =f.label :files
-        =f.file_field :files, multiple: true
+        = f.label :files
+        = f.file_field :files, multiple: true
       p
         = f.submit 'Save'
 
