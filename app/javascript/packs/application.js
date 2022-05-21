@@ -9,9 +9,8 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import answers from "../utilities/answers"
 import question from "../utilities/questions"
-
+import direct_uploads from "../utilities/direct_uploads"
 require("jquery")
-
 
 Rails.start()
 Turbolinks.start()

@@ -7,14 +7,28 @@ feature 'User can delete his question', %q{
 }, js: true do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
-  given(:answer) { create(:answer) }
+  given!(:answer) { create(:answer, user: user) }
+  given!(:answer_with_attachment) { create(:answer, :with_attachment, user: user) }
 
   scenario 'Authenticated user destroys own answer' do
+
     sign_in(answer.user)
     visit question_path answer.question
     click_on 'Delete'
 
     expect(page).to_not have_content answer.body
+  end
+
+  scenario 'Authenticated user destroys own attached files' do
+    sign_in(answer.user)
+    visit question_path(answer_with_attachment.question)
+    expect(page).to have_link answer_with_attachment.filename
+
+    within '.attachments' do
+      click_on 'Delete file'
+    end
+
+    expect(page).to_not have_link answer_with_attachment.filename
   end
 
   scenario "Authenticated user can't destroy other user's answer" do

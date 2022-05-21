@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :questions do
     resources :answers, shallow: true do
       patch :mark_as_best, on: :member
+      # delete :prune_attachment, on: :member
     end
-
   end
+
+  resources :attachments, only: :destroy
 end

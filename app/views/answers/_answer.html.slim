@@ -1,23 +1,31 @@
 - if answer.persisted?
   div id = "answer_#{answer.id}"
-    -if answer.best?
+    - if answer.best?
       b= "Best answer:"
+
     p= answer.body
+
+    = render 'shared/attachments', resource: answer
+
     - if show_best?(answer)
       p= link_to 'Mark as best', mark_as_best_answer_path(answer),
-              remote: true,
-              method: :patch
+            remote: true,
+            method: :patch
 
     - if current_user&.author_of?(answer)
       p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-      p= button_to 'Delete',
-              answer_path(answer),
+      p= button_to 'Delete answer', answer_path(answer),
               remote: true,
               method: :delete
 
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-      = f.label :body, 'Your answer'
-      = f.text_area :body
-      = f.submit 'Save'
+      p
+        = f.label :body, 'Your answer'
+        = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+      p
+        = f.submit 'Save'
 
     hr

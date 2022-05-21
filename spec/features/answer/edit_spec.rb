@@ -24,6 +24,7 @@ feature 'User can edit his answer', %q{
       click_on 'Edit'
       within '.answers' do
         fill_in 'Your answer', with: 'edit answer'
+
         click_on 'Save'
 
         expect(page).to_not have_content answer.body
@@ -31,6 +32,18 @@ feature 'User can edit his answer', %q{
         expect(page).to_not have_selector 'textarea'
       end
     end
+
+    scenario 'can add attached files' do
+      click_on 'Edit'
+      within '.answers' do
+        fill_in 'Your answer', with: 'edit answer'
+        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+        end
+      end
 
     scenario 'edits his answer with errors' do
       click_on 'Edit'
