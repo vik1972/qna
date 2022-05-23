@@ -5,6 +5,11 @@
 
     p= answer.body
 
+    .links
+      p Links:
+      ul
+        =render 'shared/links', resource: answer
+
     = render 'shared/attachments', resource: answer
 
     - if show_best?(answer)
