@@ -6,6 +6,6 @@ Rails.application.routes.draw do
       patch :mark_as_best, on: :member
     end
   end
-
+  resources :links, only: :destroy
   resources :attachments, only: :destroy
 end

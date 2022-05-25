@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'User can add links to answer', %q{
   In order to provade additional into to my answer
-  As an question's author
+  As an answer's author
   I'd like to be able to add links
 } do
 
@@ -42,4 +42,19 @@ feature 'User can add links to answer', %q{
       expect(page).to have_content 'add link'
     end
   end
+
+  scenario 'User trys to ads link to another answer' do
+    sign_in(user)
+    visit question_path(question)
+
+    expect(page).to_not have_link 'New answer'
+  end
+
+  scenario 'Unauthenticated user trys to ads link to another answer' do
+    visit question_path(question)
+
+    expect(page).to_not have_link 'New answer'
+  end
+
+
 end
