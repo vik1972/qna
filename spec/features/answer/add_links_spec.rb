@@ -4,11 +4,12 @@ feature 'User can add links to answer', %q{
   In order to provade additional into to my answer
   As an answer's author
   I'd like to be able to add links
-} do
+}do
 
   given(:user) { create(:user) }
   given(:author) { create(:user) }
   given(:question) { create(:question) }
+  given(:url) { 'https://google.ru' }
   given(:gist_url) { 'https://gist.github.com/vik1972/6375d4e9a56ec049620af6dcabb7cae7' }
 
   scenario 'Author adds link when asks answer', js: true do
@@ -55,6 +56,5 @@ feature 'User can add links to answer', %q{
 
     expect(page).to_not have_link 'New answer'
   end
-
 
 end
