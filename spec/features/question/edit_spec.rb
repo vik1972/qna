@@ -8,6 +8,7 @@ feature 'User can his question', %q{
   given(:user) { create(:user) }
   given!(:author) { create(:user) }
   given!(:question) { create(:question, user: author) }
+  given(:url) { 'https://google.ru' }
 
   describe 'Author of question', js: true do
     background do
@@ -40,9 +41,20 @@ feature 'User can his question', %q{
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
       end
-
-
     end
+
+      scenario 'add link to edited question' do
+        within '.questions' do
+          click_on 'Edit question'
+
+          click_on 'add link'
+
+          fill_in 'Link name', with: 'New_Link'
+          fill_in 'Url', with: url
+
+          click_on 'Save'
+        end
+      end
 
 
     scenario 'edits his question with invalid' do

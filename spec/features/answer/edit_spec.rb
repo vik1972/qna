@@ -9,6 +9,7 @@ feature 'User can edit his answer', %q{
   given(:other_user) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question, user: user) }
+  given (:url) { 'https://google.ru' }
 
   scenario 'Unauthenticated can not edit answer ' do
     visit question_path(question)
@@ -43,7 +44,21 @@ feature 'User can edit his answer', %q{
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
         end
+    end
+
+    scenario 'can add links to his answer' do
+      click_on 'Edit'
+      within '.answers' do
+        click_on 'add link'
+
+        fill_in 'Link name', with: 'New_Link'
+        fill_in 'Url', with: url
+
+        click_on 'Save'
+
+        expect(page).to have_link 'New_Link', href: url
       end
+    end
 
     scenario 'edits his answer with errors' do
       click_on 'Edit'
