@@ -11,21 +11,7 @@ feature 'User can add links to question', %q{
   given(:url) { 'https://google.ru' }
   given(:gist_url) { 'https://gist.github.com/vik1972/6375d4e9a56ec049620af6dcabb7cae7' }
 
-  scenario 'Author adds link when asks question' do
-    sign_in(author)
-    visit new_question_path
-    fill_in 'Title', with: 'Text question'
-    fill_in 'Body', with: 'Text body'
-
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Url', with: url
-
-    click_on 'Ask'
-
-    expect(page).to have_link 'My gist', href: url
-  end
-
-  scenario 'Author adds links when asks question' do
+  scenario 'Author adds link to Gist when asks question', js: true do
     sign_in(author)
     visit new_question_path
     fill_in 'Title', with: 'Text question'
@@ -35,11 +21,26 @@ feature 'User can add links to question', %q{
     fill_in 'Url', with: gist_url
 
     click_on 'Ask'
-
-    expect(page).to have_link 'My gist', href: gist_url
-    within '.add_fields' do
-      expect(page).to have_content 'add link'
+    within('.gist') do
+      expect(page).to have_content "Hello, it is my Gist"
     end
+
+  end
+
+  scenario 'Author adds links when asks question', js: true do
+    sign_in(author)
+    visit new_question_path
+    fill_in 'Title', with: 'Text question'
+    fill_in 'Body', with: 'Text body'
+
+    click_on 'add link'
+
+    within all('.nested-fields').last do
+      fill_in 'Link name', with: 'google-2'
+      fill_in 'Url', with: url
+    end
+    click_on 'Ask'
+    expect(page).to have_link 'google-2', href: url
   end
 
 end
