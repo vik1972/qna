@@ -18,17 +18,15 @@ class QuestionsController < ApplicationController
   end
 
   def update
-      @question.update(question_params) if current_user&.author_of?(@question)
+    @question.update(question_params) if current_user&.author_of?(@question)
   end
 
   def create
     @question = Question.new(question_params)
     @question.user = current_user
-    reward = @question.reward.present? ? ' with reward' : ' without reward'
 
     if @question.save
-      # redirect_to @question, notice: 'Your question successfully created.'
-      redirect_to @question, notice: "Your question successfully created#{reward}."
+      redirect_to @question, notice: "Your question successfully created."
     else
       render :new
     end
@@ -47,7 +45,7 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body,
-                                     files: [], links_attributes: [:name, :url],
-                                     reward_attributes: [:title, :image])
+      files: [], links_attributes: [:name, :url],
+      reward_attributes: [:title, :image])
   end
 end

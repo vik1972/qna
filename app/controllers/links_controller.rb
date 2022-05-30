@@ -9,6 +9,6 @@ class LinksController < ApplicationController
   private
 
   def find_link
-    @link=Link.find(params[:id])
+    @link = Link.find(params[:id])
   end
 end

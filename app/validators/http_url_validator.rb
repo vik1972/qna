@@ -1,8 +1,7 @@
 class HttpUrlValidator < ActiveModel::EachValidator
-
   def url_valid?(value)
     uri = URI.parse(value)
-    (uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)) && !uri.host.nil?
+    (uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)) && !uri.host.nil?
   rescue URI::InvalidURIError
     false
   end
@@ -12,5 +11,4 @@ class HttpUrlValidator < ActiveModel::EachValidator
       record.errors.add(attribute, "is not a valid HTTP URL")
     end
   end
-
 end
