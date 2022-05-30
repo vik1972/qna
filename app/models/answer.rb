@@ -5,15 +5,16 @@ class Answer < ApplicationRecord
   has_many :links, dependent: :destroy, as: :linkable
 
   has_many_attached :files
+
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
-  # accepts_nested_attributes_for :links, reject_if: :all_blank
 
   default_scope { order(best: :desc).order(created_at: :asc) }
 
   def mark_best!
     transaction do
       self.class.where(question_id: self.question_id).update(best: false)
-      update(best: true)
+      update!(best: true)
+      question.reward&.update!(user: user)
     end
   end
 end

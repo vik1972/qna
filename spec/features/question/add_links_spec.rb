@@ -11,9 +11,12 @@ feature 'User can add links to question', %q{
   given(:url) { 'https://google.ru' }
   given(:gist_url) { 'https://gist.github.com/vik1972/6375d4e9a56ec049620af6dcabb7cae7' }
 
-  scenario 'Author adds link to Gist when asks question', js: true do
+  background do
     sign_in(author)
     visit new_question_path
+  end
+
+  scenario 'Author adds link to Gist when asks question', js: true do
     fill_in 'Title', with: 'Text question'
     fill_in 'Body', with: 'Text body'
 
@@ -28,8 +31,6 @@ feature 'User can add links to question', %q{
   end
 
   scenario 'Author adds links when asks question', js: true do
-    sign_in(author)
-    visit new_question_path
     fill_in 'Title', with: 'Text question'
     fill_in 'Body', with: 'Text body'
 
