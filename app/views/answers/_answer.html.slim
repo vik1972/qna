@@ -4,6 +4,10 @@
       b= "Best answer:"
 
     p= answer.body
+    .links
+      p Links:
+      ul
+        =render 'shared/links', resource: answer
 
     = render 'shared/attachments', resource: answer
 
@@ -25,6 +29,11 @@
       p
         = f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+      p
+        #links
+          = f.fields_for :links do |l|
+          .add_link
+            = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
       p
         = f.submit 'Save'
 

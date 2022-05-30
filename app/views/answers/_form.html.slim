@@ -9,4 +9,6 @@
     =f.label  :files
     =f.file_field :files, multiple: true, direct_upload: true
   p
+    = render 'shared/add_links', f: f
+  p
     = f.submit 'New answer'
