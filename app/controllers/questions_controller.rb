@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class QuestionsController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show destroy update]
 
@@ -26,7 +30,7 @@ class QuestionsController < ApplicationController
     @question.user = current_user
 
     if @question.save
-      redirect_to @question, notice: "Your question successfully created."
+      redirect_to @question, notice: 'Your question successfully created.'
     else
       render :new
     end
@@ -45,7 +49,7 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body,
-      files: [], links_attributes: [:name, :url],
-      reward_attributes: [:title, :image])
+                                     files: [], links_attributes: %i[name url],
+                                     reward_attributes: %i[title image])
   end
 end

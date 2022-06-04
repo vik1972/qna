@@ -10,6 +10,8 @@ import "channels"
 import answers from "../utilities/answers"
 import question from "../utilities/questions"
 import direct_uploads from "../utilities/direct_uploads"
+import vote from "../utilities/vote"
+
 require("jquery")
 require("@nathanvda/cocoon")
 
