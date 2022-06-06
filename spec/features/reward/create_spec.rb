@@ -1,6 +1,8 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-feature "User can add reward to question", "
+require 'rails_helper'
+
+feature 'User can add reward to question', "
   In order to reward author of the best answer
   As an question's author
   I'd like to be able to set a reward
@@ -13,16 +15,16 @@ feature "User can add reward to question", "
   end
 
   scenario "Question's author adds reward when asks question" do
-    fill_in "Title", with: "Test question"
-    fill_in "Body", with: "text text"
+    fill_in 'Title', with: 'Test question'
+    fill_in 'Body', with: 'text text'
 
-    within ".reward" do
-      fill_in "Reward title", with: "My Reward"
-      attach_file "Image", "#{Rails.root}/app/assets/images/reward.png"
+    within '.reward' do
+      fill_in 'Reward title', with: 'My Reward'
+      attach_file 'Image', "#{Rails.root}/app/assets/images/reward.png"
     end
 
-    click_on "Ask"
+    click_on 'Ask'
 
-    expect(page).to have_content "Your question successfully created."
+    expect(page).to have_content 'Your question successfully created.'
   end
 end

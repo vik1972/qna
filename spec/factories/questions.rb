@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   sequence :title do |n|
     "TitleQuestion#{n}"
@@ -18,7 +20,7 @@ FactoryBot.define do
     trait :with_attachment do
       after :create do |question|
         question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"),
-          filename: "rails_helper.rb")
+                              filename: 'rails_helper.rb')
 
         def question.filename
           files[0].filename.to_s

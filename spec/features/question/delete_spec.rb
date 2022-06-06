@@ -1,6 +1,8 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-feature "User can delete his question", "
+require 'rails_helper'
+
+feature 'User can delete his question', "
   In order to delete yourself question
   As an authenticated user
   I'd lake to be able to delete my question
@@ -9,10 +11,10 @@ feature "User can delete his question", "
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: author) }
 
-  scenario "Author delete his question" do
+  scenario 'Author delete his question' do
     sign_in(author)
     visit question_path(question)
-    click_on "Delete question"
+    click_on 'Delete question'
 
     expect(page).to_not have_content question.title
   end
@@ -21,12 +23,12 @@ feature "User can delete his question", "
     sign_in(user)
     visit question_path(question)
 
-    expect(page).to_not have_link "Delete answer"
+    expect(page).to_not have_link 'Delete answer'
   end
 
   scenario "Unauthenticated user can't destroy question" do
     visit question_path(question)
 
-    expect(page).to_not have_link "Delete answer"
+    expect(page).to_not have_link 'Delete answer'
   end
 end

@@ -4,6 +4,9 @@
       b= "Best answer:"
 
     p= answer.body
+
+    = render 'shared/vote', resource: answer
+
     .links
       p Links:
       ul

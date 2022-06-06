@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe User, type: :model do
   it { should have_many(:questions).dependent(:destroy) }
   it { should have_many(:answers).dependent(:destroy) }
+  it { should have_many(:votes).dependent(:destroy) }
 
   describe "Check author" do
     let(:user) { create(:user) }
@@ -11,7 +14,7 @@ RSpec.describe User, type: :model do
     let(:reward) { create(:reward, question: question) }
     let(:answer) { create(:answer, question: question) }
 
-    it "current user is author" do
+    it 'current user is author' do
       expect(user).to be_author_of(question)
     end
 

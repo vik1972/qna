@@ -1,6 +1,8 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-feature "User can create answer", "
+require 'rails_helper'
+
+feature 'User can create answer', "
   In order to create answer
   As an authenticated user
   I'd like to be able create answer
@@ -8,33 +10,33 @@ feature "User can create answer", "
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
 
-  describe "Authenticated user", js: true do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
       visit question_path(question)
     end
-    scenario "can create answer" do
-      fill_in "Your answer", with: "Answer text"
-      click_on "New answer"
+    scenario 'can create answer' do
+      fill_in 'Your answer', with: 'Answer text'
+      click_on 'New answer'
 
-      within ".answers" do
-        expect(page).to have_content "Answer text"
+      within '.answers' do
+        expect(page).to have_content 'Answer text'
       end
     end
 
-    scenario "can create answer with attached files" do
-      fill_in "Your answer", with: "Answer text"
-      attach_file "Files", ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
-      click_on "New answer"
+    scenario 'can create answer with attached files' do
+      fill_in 'Your answer', with: 'Answer text'
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'New answer'
 
-      within ".answers" do
-        expect(page).to have_link "rails_helper.rb"
-        expect(page).to have_link "spec_helper.rb"
+      within '.answers' do
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
       end
     end
 
-    scenario "can create answer with invalid data" do
-      click_on "New answer"
+    scenario 'can create answer with invalid data' do
+      click_on 'New answer'
 
       expect(page).to have_content "Body can't be blank"
     end
@@ -43,6 +45,6 @@ feature "User can create answer", "
   scenario "Unauthenticated user can't create answer" do
     visit question_path(question)
 
-    expect(page).to_not have_content "New answer"
+    expect(page).to_not have_content 'New answer'
   end
 end
