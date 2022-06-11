@@ -11,6 +11,7 @@ import answers from "../utilities/answers"
 import question from "../utilities/questions"
 import direct_uploads from "../utilities/direct_uploads"
 import vote from "../utilities/vote"
+import "handlebars-loader"
 
 require("jquery")
 require("@nathanvda/cocoon")
@@ -18,3 +19,5 @@ require("@nathanvda/cocoon")
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+

@@ -1,3 +1,5 @@
+import consumer from "../channels/consumer";
+
 $(document).on('turbolinks:load', function () {
     $('.questions').on('click', '.edit-question-link', function (e) {
         e.preventDefault();

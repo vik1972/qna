@@ -13,7 +13,7 @@ feature 'User can sing out', "
     visit questions_path
   end
   scenario 'Authenticated user tries to sing out' do
-    click_on 'Log out'
+    click_on 'Log_out'
 
     expect(page).to have_content 'Signed out successfully.'
   end
