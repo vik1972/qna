@@ -28,7 +28,7 @@ RSpec.describe AnswersController, type: :controller do
           expect { new_answer }.to_not change(question.answers, :count)
         end
 
-        it 'render question create template' do
+        it 'render answer create template' do
           post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }, format: :js
           expect(response).to render_template :create
         end

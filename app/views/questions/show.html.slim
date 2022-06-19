@@ -5,13 +5,26 @@ p = render 'shared/attachments', resource: @question
 .links
   p Links:
   ul
-    =render 'shared/links', resource: @question
+    = render 'shared/links', resource: @question
 
 - if current_user&.author_of?(@question)
   p= button_to 'Delete question',
           question_path(@question),
           method: :delete,
           data: { confirm: 'Are you sure?' }
+
+div id = "question_#{@question.id}_comments"
+  h3 Comments:
+  .comments
+    = render @question.comments
+  .question-comments-error
+    = render 'shared/errors', resource: @comment
+  - if current_user
+    .question-comments-form
+      = link_to 'Add comment', '#', class: 'add-comment', data: {question_id: @question.id}
+      = render 'comments/form_comment', resource: @question
+hr
+
 
 h2 Answers
 .answers
@@ -20,4 +33,4 @@ h2 Answers
 - if current_user.present?
   = render 'answers/form'
 
-=link_to 'Back', questions_path
+= link_to 'Back', questions_path

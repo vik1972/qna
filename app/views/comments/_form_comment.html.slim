@@ -1,0 +1,7 @@
+= form_with model: [resource, Comment.new], class: "new-comment hidden",html: {id: "question-#{resource.id}-comments"}, local: false  do |f|
+  .form_field
+    p
+      = f.label :body, "Comment body"
+      = f.text_area :body
+  p
+    = f.submit "Save comment"

@@ -11,6 +11,7 @@ import answers from "../utilities/answers"
 import question from "../utilities/questions"
 import direct_uploads from "../utilities/direct_uploads"
 import vote from "../utilities/vote"
+import comments from "../utilities/comments"
 import "handlebars-loader"
 
 require("jquery")

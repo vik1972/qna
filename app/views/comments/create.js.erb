@@ -1,0 +1,5 @@
+$('.question-comments-error').html('<%= render 'shared/errors', resource: @comment %>');
+<%- if @comment.persisted? %>
+  $('.comments').append('<%= j render @comment %>');
+  $('.form_field #comment_body').val('');
+<% end %>

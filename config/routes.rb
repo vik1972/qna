@@ -13,15 +13,24 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: :voted do
+  concern :commented do
+    resources :comments, shallow: true, only: :create
+  end
+
+  resources :questions, concerns: %i[voted commented] do
     resources :answers, concerns: :voted, shallow: true do
       patch :mark_as_best, on: :member
     end
+  end
+
+  concern :commented do
+    resources :comments, shallow: true, only: :create
   end
 
   resources :links, only: :destroy
   resources :attachments, only: :destroy
   resources :rewards, only: :index
 
-  # mount ActionCable.server => '/cable'
+
+  mount ActionCable.server => '/cable'
 end

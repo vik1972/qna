@@ -6,7 +6,8 @@
     p= answer.body
 
     = render 'shared/vote', resource: answer
-
+    / .answer_comments
+    /   = render "comments/comment"
     .links
       p Links:
       ul
