@@ -9,6 +9,7 @@ feature "User can see new comment to question or answer", "
   given(:user) { create(:user) }
   given(:author) { create(:user) }
   given(:question) { create(:question, user: author) }
+  given!(:answer) { create(:answer, question: question) }
 
   describe "Comment ot question" do
     scenario "it appears another user's page", js: true do
@@ -22,8 +23,9 @@ feature "User can see new comment to question or answer", "
       end
 
       Capybara.using_session("author") do
-        within ".question-comments-form" do
+        within ".question-comments" do
           click_on "Add comment"
+
           fill_in "Comment body", with: "Comment to question"
           click_on "Save comment"
         end
@@ -36,6 +38,35 @@ feature "User can see new comment to question or answer", "
       Capybara.using_session("user") do
         within ".comments" do
           expect(page).to have_content "Comment to question"
+        end
+      end
+    end
+  end
+
+  describe "Comment ot answer" do
+    scenario "it appears another user's page", js: true do
+      Capybara.using_session("author") do
+        sign_in(author)
+        visit question_path(question)
+      end
+
+      Capybara.using_session("user") do
+        visit question_path(question)
+      end
+
+      Capybara.using_session("author") do
+        within ".answer-comments" do
+          click_on "Add comment"
+
+          fill_in "Comment body", with: "Comment to answer"
+          click_on "Save comment"
+        end
+          expect(page).to have_content "Comment to answer"
+      end
+
+      Capybara.using_session("user") do
+        within ".answer-comments" do
+          expect(page).to have_content "Comment to answer"
         end
       end
     end

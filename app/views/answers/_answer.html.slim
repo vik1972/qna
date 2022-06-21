@@ -1,17 +1,21 @@
 - if answer.persisted?
-  div id = "answer_#{answer.id}"
+  .answer id = "answer_#{answer.id}"
     - if answer.best?
       b= "Best answer:"
 
     p= answer.body
 
     = render 'shared/vote', resource: answer
-    / .answer_comments
-    /   = render "comments/comment"
+
+    .answer-comments
+      = render 'shared/comments', commentable: answer
+    hr
+
     .links
       p Links:
       ul
         =render 'shared/links', resource: answer
+
 
     = render 'shared/attachments', resource: answer
 

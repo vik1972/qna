@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_commentable
+  before_action :set_gon, only: :create
   after_action :publish_comment, only: :create
 
   def create
@@ -25,6 +26,10 @@ class CommentsController < ApplicationController
       comment: @comment,
       user: @comment.user
     )
+  end
+
+  def set_gon
+    gon.resource_klass = @commentable.class
   end
 
   def comment_params

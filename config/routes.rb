@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: %i[voted commented] do
-    resources :answers, concerns: :voted, shallow: true do
+    resources :answers, concerns: %i[voted commented], shallow: true do
       patch :mark_as_best, on: :member
     end
   end
