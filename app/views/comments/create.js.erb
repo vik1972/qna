@@ -1,12 +1,13 @@
-let commentable = '<%= "#{@resource}-#{@resource_id}" %>'
-//console.log("create commentable = " + commentable)
+var commentable = '<%= "#{@resource}-#{@resource_id}" %>'
+console.log("create commentable = " + commentable)
 $('#' + commentable + ' .comment-errors').html('<%= render 'shared/errors', resource: @comment %>')
 <%- if @comment.persisted? %>
   $('#' + commentable + ' .comments').append('<%= j render @comment %>')
   $('#comment-form-' + commentable + ' #comment_body').val('')
   $('#comment-form-' + commentable).addClass('hidden')
-  $('#' + commentable + ' .add-comment').show()
-//  console.log("create commentable = " + '#comment-form-' + commentable)
-  location.reload();
+  $('#add-comment-' + commentable).show()
+  commentable = undefined
+//  location.reload();
+
 <% end %>
 
