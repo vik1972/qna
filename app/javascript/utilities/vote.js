@@ -4,6 +4,6 @@ $(document).on('turbolinks:load', function(){
             resourceName = e.detail[0]['resourceName'],
             resourceId = e.detail[0]['resourceId'];
 
-        $('#' + resourceName + '_' +resourceId + ' .vote .rating').html(rating)
+        $('#' + resourceName + '-' +resourceId + ' .vote .rating').html(rating)
     })
 })

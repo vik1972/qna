@@ -19,7 +19,7 @@ feature "User can vote for a answer", "
     end
 
     scenario 'votes up for answer' do
-      within "#answer_#{answer.id}" do
+      within "#answer-#{answer.id}" do
         click_on 'Like'
 
         within '.rating' do
@@ -29,7 +29,7 @@ feature "User can vote for a answer", "
     end
 
     scenario 'tries to vote up for answer twice' do
-      within "#answer_#{answer.id}" do
+      within "#answer-#{answer.id}" do
         click_on 'Like'
         click_on 'Like'
 
@@ -40,7 +40,7 @@ feature "User can vote for a answer", "
     end
 
     scenario 'votes down for answer' do
-      within "#answer_#{answer.id}" do
+      within "#answer-#{answer.id}" do
         click_on "Don't like"
 
         within '.rating' do
@@ -50,7 +50,7 @@ feature "User can vote for a answer", "
     end
 
     scenario 'tries to vote down for answer twice' do
-      within "#answer_#{answer.id}" do
+      within "#answer-#{answer.id}" do
         click_on "Don't like"
         click_on "Don't like"
 
@@ -61,7 +61,7 @@ feature "User can vote for a answer", "
     end
 
     scenario 'cancels his vote' do
-      within "#answer_#{answer.id}" do
+      within "#answer-#{answer.id}" do
         click_on 'Like'
         click_on 'Cancel vote'
 
@@ -72,7 +72,7 @@ feature "User can vote for a answer", "
     end
 
     scenario 'can re-votes' do
-      within "#answer_#{answer.id}" do
+      within "#answer-#{answer.id}" do
         click_on 'Like'
         click_on 'Cancel vote'
         click_on "Don't like"

@@ -23,7 +23,7 @@ feature 'Mark as  best answer', "
       sign_in(author)
       visit question_path(answer.question)
 
-      within "#answer_#{answer.id}" do
+      within "#answer-#{answer.id}" do
         expect(page).to_not have_content 'Best answer:'
         click_on 'Mark as best'
         expect(page).to have_content 'Best answer:'

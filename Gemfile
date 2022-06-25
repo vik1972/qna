@@ -36,7 +36,9 @@ gem 'jquery-rails'
 gem 'slim-rails'
 gem 'gon'
 gem 'handlebars-source', '~> 4.7', '>= 4.7.7'
-
+gem 'omniauth'
+gem 'omniauth-github'
+gem "omniauth-rails_csrf_protection"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -45,6 +47,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 5.0.0'
   gem 'standard'
+  gem 'letter_opener'
 end
 
 group :development do
@@ -67,6 +70,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'webdrivers'
+  gem 'capybara-email'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
