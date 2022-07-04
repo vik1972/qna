@@ -23,6 +23,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @answer
     @answer.destroy if current_user.author_of?(@answer)
   end
 
