@@ -112,11 +112,6 @@ RSpec.describe QuestionsController, type: :controller do
       it 'tries to delete question' do
         expect { delete :destroy, params: { id: question }, format: :js }.to_not change(Question, :count)
       end
-
-      it 'redirects to questions list' do
-        delete :destroy, params: { id: question }
-        expect(response).to redirect_to questions_path
-      end
     end
 
     context 'Unauthorised user' do

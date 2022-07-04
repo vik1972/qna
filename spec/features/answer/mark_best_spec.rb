@@ -19,6 +19,7 @@ feature 'Mark as  best answer', "
   end
 
   describe 'Authenticate user' do
+
     scenario 'as author can mark the answer as the best for my question' do
       sign_in(author)
       visit question_path(answer.question)
@@ -26,8 +27,10 @@ feature 'Mark as  best answer', "
       within "#answer-#{answer.id}" do
         expect(page).to_not have_content 'Best answer:'
         click_on 'Mark as best'
+        # save_and_open_page
         expect(page).to have_content 'Best answer:'
       end
+      # expect(page).to have_content 'Best answer:'
     end
 
     scenario "can't mark the answer as the best for other question" do

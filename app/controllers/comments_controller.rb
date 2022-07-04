@@ -4,6 +4,8 @@ class CommentsController < ApplicationController
   before_action :set_gon, only: :create
   after_action :publish_comment, only: :create
 
+  skip_authorization_check
+
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user

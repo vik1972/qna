@@ -3,7 +3,7 @@
 class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_attachment
-
+  skip_authorization_check
   def destroy
     @attachment.purge if current_user&.author_of?(@attachment.record)
   end
