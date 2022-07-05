@@ -8,6 +8,7 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: %i[destroy update mark_as_best]
   after_action :publish_answer, only: [:create]
 
+  authorize_resource
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -16,11 +17,13 @@ class AnswersController < ApplicationController
   end
 
   def update
+    authorize! :update, @answer
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
+    authorize! :destroy, @answer
     @answer.destroy if current_user.author_of?(@answer)
   end
 

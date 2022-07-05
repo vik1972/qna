@@ -37,14 +37,15 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let!(:answer) { create(:answer, question: question) }
+    let!(:user) { create(:user) }
+    let!(:answer) { create(:answer, question: question, user: user) }
 
     context 'Authorized user edits his answer' do
       before { login(user) }
 
       context 'with valid attributes' do
         it 'changes answer attributes' do
-          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          patch :update, params: { id: answer, answer: { body: 'new body'} }, format: :js
           answer.reload
           expect(answer.body).to eq 'new body'
         end
@@ -96,7 +97,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render destroy template' do
         delete :destroy, params: { id: answer }, format: :js
-        expect(response).to render_template :destroy
+        expect(response).to redirect_to root_path
       end
     end
 

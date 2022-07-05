@@ -25,7 +25,7 @@ feature 'User can add links to question', "
     fill_in 'Url', with: gist_url
 
     click_on 'Ask'
-    within('.gist') do
+    within '.gist' do
       expect(page).to have_content 'Hello, it is my Gist'
     end
   end

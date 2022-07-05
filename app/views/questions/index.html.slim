@@ -4,6 +4,7 @@
   .question-errors
   = render @questions
 
-p= link_to 'Ask question', new_question_path
+-if can?(:create, Question)
+  p= link_to 'Ask question', new_question_path
 p= button_to 'Log_in', new_user_session_path
 p= button_to 'Log_out', destroy_user_session_path, method: :delete
