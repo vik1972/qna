@@ -7,13 +7,12 @@ RSpec.describe User, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
   it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   describe "Check author" do
     let(:user) { create(:user) }
     let(:new_user) { create(:user) }
     let(:question) { create(:question, user: user) }
-    let(:reward) { create(:reward, question: question) }
-    let(:answer) { create(:answer, question: question) }
 
     it "current user is author" do
       expect(user).to be_author_of(question)
@@ -34,6 +33,20 @@ RSpec.describe User, type: :model do
       expect(service).to receive(:call)
       User.find_for_oauth(auth)
     end
+  end
 
+  describe '#subscribed_of?' do
+    let(:user_not_sub) { create(:user) }
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:subscription) { create(:subscription, question: question, user: user) }
+
+    it 'return true if user subscribed' do
+      expect(user).to be_subscribed_of(question)
+    end
+
+    it 'return false if unsubscribed' do
+      expect(user_not_sub).to_not be_subscribed_of(question)
+    end
   end
 end

@@ -22,6 +22,7 @@ module Qna
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.action_cable.disable_request_forgery_protection = false
+    config.active_job.queue_adapter = :sidekiq
 
     # config.autoload_paths += [config.root.join('app')]
     # config.autoload_paths += ["#{Rails.root}/app/services"]

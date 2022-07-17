@@ -13,6 +13,8 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
 
+  after_create :email_notification
+
   default_scope { order(best: :desc).order(created_at: :asc) }
 
   def mark_best!
@@ -21,5 +23,11 @@ class Answer < ApplicationRecord
       update!(best: true)
       question.reward&.update!(user: user)
     end
+  end
+
+  private
+
+  def email_notification
+    NewAnswerNotificationJob.perform_later(self)
   end
 end
