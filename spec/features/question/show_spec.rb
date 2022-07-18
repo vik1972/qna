@@ -13,7 +13,6 @@ feature 'User can view the question and the answers to it', "
 
   scenario 'User to tries question and the answers to it' do
     visit question_path(question)
-
     answers.each { |answer| expect(page).to have_content answer.body }
   end
 end
