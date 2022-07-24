@@ -27,11 +27,10 @@ feature 'User can his question', "
       end
       expect(page).to_not have_content question.body
       expect(page).to have_content 'edited question title'
-      expect(page).to_not have_selector 'textarea'
+      expect(page).to_not have_selector 'text'
     end
 
     scenario 'can add attached files' do
-      # save_and_open_page
       expect(page).to_not have_link 'rails_helper.rb'
       expect(page).to_not have_link 'spec_helper.rb'
 
