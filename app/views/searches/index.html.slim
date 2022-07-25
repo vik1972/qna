@@ -1,7 +1,7 @@
 h1 Search results:
--if !@results.empty?
+-if !@results.nil?
   - @results.each do |result|
     = render partial: result.class.to_s.downcase, locals: { resource: result }
 -else
   h2 Nothing found
-p= link_to 'Back', questions_path
+p= link_to 'Back to Questions', questions_path
