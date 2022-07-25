@@ -1,5 +1,5 @@
 h1 Search results:
--if !@results.nil?
+-if !@results.empty?
   - @results.each do |result|
     = render partial: result.class.to_s.downcase, locals: { resource: result }
 -else
