@@ -1,0 +1,11 @@
+<%= form_with url: searches_path, method: :get, local: true do |f| %>
+  <%= f.label :query %>
+  <%= f.text_area :query %>
+  <%= f.label :scope %>
+    <%= f.select :scope, options_for_select([%w(All thinking_sphinx),
+      %w(Question question),
+      %w(Answer answer),
+      %w(Comment comment),
+      %w(User user)]) %>
+    <%= f.submit 'Search' %>
+  <% end %>
