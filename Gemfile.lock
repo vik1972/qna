@@ -480,10 +480,6 @@ DEPENDENCIES
   webpacker (~> 5.0)
   whenever
 
-PLATFORMS
-  ruby
-  x86_64-linux
-
 RUBY VERSION
    ruby 2.7.2p137
 
