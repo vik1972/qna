@@ -43,12 +43,13 @@ gem 'cancancan'
 gem 'doorkeeper', '5.1.0'
 gem 'active_model_serializers', '~> 0.10'
 gem 'oj'
-gem 'sidekiq', '<6'
+gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx', '~> 5.0'
 gem 'database_cleaner-active_record'
+# gem "mini_racer"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -75,7 +76,6 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
-  gem 'capistrano-sidekiq', require: false
 end
 
 group :test do
