@@ -4,6 +4,10 @@ lock "~> 3.17.0"
 set :application, "qna"
 set :repo_url, "git@github.com:vik1972/qna.git"
 
+set :pty, false
+
+set :branch, "16_deploy"
+
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, "deployer"
