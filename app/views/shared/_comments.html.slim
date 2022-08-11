@@ -1,7 +1,8 @@
-h4 Comments
-.comments id="#{commentable.class.name.underscore}_#{commentable.id}_comments" data-commentable="#{commentable.class.name.underscore}" data-commentable-id="#{commentable.id}"
+-cache commentable do
+  h4 Comments
+  .comments id="#{commentable.class.name.underscore}_#{commentable.id}_comments" data-commentable="#{commentable.class.name.underscore}" data-commentable-id="#{commentable.id}"
 
-  = render commentable.comments
+    = render commentable.comments
 - if current_user
   = link_to 'Add comment', '#', class: 'add-comment', id: "add-comment-#{commentable.class.name.underscore}-#{commentable.id}", data: { commentable: "#{commentable.class.name.underscore}-#{commentable.id}" }
 

@@ -1,5 +1,6 @@
-div id = "comment_#{comment.id}"
-  p
-    = comment.body
-  p
-    = comment.user.email
+- cache comment do
+  div id = "comment_#{comment.id}"
+    p
+      = comment.body
+    p
+      = comment.user.email

@@ -1,48 +1,49 @@
 - if answer.persisted?
-  .answer id = "answer-#{answer.id}"
-    - if answer.best?
-      b= "Best answer:"
+  - cache answer do
+    .answer id = "answer-#{answer.id}"
+      - if answer.best?
+        b= "Best answer:"
 
-    p= answer.body
+      p= answer.body
 
-    = render 'shared/vote', resource: answer
+      = render 'shared/vote', resource: answer
 
-    .answer-comments
-      = render 'shared/comments', commentable: answer
-    hr
+      .answer-comments
+        = render 'shared/comments', commentable: answer
+      hr
 
-    .links
-      p Links:
-      ul
-        =render 'shared/links', resource: answer
+      .links
+        p Links:
+        ul
+          = render 'shared/links', resource: answer
 
 
-    = render 'shared/attachments', resource: answer
+      = render 'shared/attachments', resource: answer
 
-    - if show_best?(answer)
-      p= link_to 'Mark as best', mark_as_best_answer_path(answer),
-            remote: true,
-            method: :patch
+      - if show_best?(answer)
+        p= link_to 'Mark as best', mark_as_best_answer_path(answer),
+                remote: true,
+                method: :patch
 
-    - if current_user&.author_of?(answer)
-      p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-      p= button_to 'Delete answer', answer_path(answer),
-              remote: true,
-              method: :delete
+      - if current_user&.author_of?(answer)
+        p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+        p= button_to 'Delete answer', answer_path(answer),
+                remote: true,
+                method: :delete
 
-    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-      p
-        = f.label :body, 'Your answer'
-        = f.text_area :body
-      p
-        = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
-      p
-        #links
-          = f.fields_for :links do |l|
-          .add_link
-            = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
-      p
-        = f.submit 'Save'
+      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+        p
+          = f.label :body, 'Your answer'
+          = f.text_area :body
+        p
+          = f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true
+        p
+          #links
+            = f.fields_for :links do |l|
+            .add_link
+              = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
+        p
+          = f.submit 'Save'
 
-    hr
+  hr
