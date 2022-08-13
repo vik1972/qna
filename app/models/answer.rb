@@ -4,7 +4,7 @@ class Answer < ApplicationRecord
   include Votable
   include Commentable
 
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :user
   validates :body, presence: true
   has_many :links, dependent: :destroy, as: :linkable

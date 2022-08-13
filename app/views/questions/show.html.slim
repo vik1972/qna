@@ -1,33 +1,34 @@
-.question id="question-#{@question.id}"
-  h1= @question.title
-  p= @question.body
+- cache @question do
+  .question id="question-#{@question.id}"
+    h1= @question.title
+    p= @question.body
 
-  .subscription
-    - if can?(:create, Subscription)
-      = render 'subscriptions/subscription', resource: @question
+    .subscription
+      - if can?(:create, Subscription)
+        = render 'subscriptions/subscription', resource: @question
 
-  p = render 'shared/attachments', resource: @question
+    p = render 'shared/attachments', resource: @question
 
-  .links
-    p Links:
-    ul
-      = render 'shared/links', resource: @question
+    .links
+      p Links:
+      ul
+        = render 'shared/links', resource: @question
 
-  - if current_user&.author_of?(@question)
-    p= button_to 'Delete question',
-            question_path(@question),
-            method: :delete,
-            data: { confirm: 'Are you sure?' }
+    - if current_user&.author_of?(@question)
+      p= button_to 'Delete question',
+              question_path(@question),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
 
-  .question-comments
-    = render 'shared/comments', commentable: @question
-hr
+    .question-comments
+      = render 'shared/comments', commentable: @question
+  hr
 
-  h2 Answers
-  .answers
-    = render @question.answers
+    h2 Answers
+    .answers
+      = render @question.answers
 
-  - if current_user.present?
-    = render 'answers/form'
+    - if current_user.present?
+      = render 'answers/form'
 
-  = link_to 'Back', questions_path
+= link_to 'Back', questions_path
