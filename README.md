@@ -1,24 +1,21 @@
 # README
+Мой учебный проект по курсу профессиональная разработка на Ruby on Rails в школе Thinknetica thinknetica.com
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Сайт - аналог stackoverflow.com, позволяет:
+• добавлять вопросы, ответы, комментарии к ним.
+• Добавлять вложения к вопросам и ответам, выбирать автору вопроса лучший ответ
+• Поддерживается рейтинг (за и против) вопросов и ответов
+• Полнотекстовый поиск по вопросам и ответам (thinking sphinx)
+• Поддержка фоновых процессов (ежедневный дайджест вопросов, подписка на новые ответы), рассылка писем (sidekiq), запуск задач по расписанию
+• Авторизация и айтентификация, втч через OAUTH провайдеров - соцсети (devise).
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Используемые технологии:
+• Ruby 2.7.2 и Rails 6.1.5
+• postgresql, redis
+• haml, css
+• jscript
+• ajax
+• websockets (ActionCable)
+• TDD/BDD (Rspec/Capybara)
+• ActivJob на “бекенде” Sidekiq
+• Active Storage
